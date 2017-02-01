@@ -14,4 +14,13 @@ Cuba.define do
     res.write view("home", {title: "Cuba Genie"})
   end
 end
+
+Cuba.define do
+  on get do
+    on 'openclick' do
+      res.write 'Opening'
+      res.write 'Clicking'
+    end
+  end
+end
   
