@@ -5,6 +5,6 @@ Lightweight application that opens an email in GMail and clicks the links (inclu
 ## Run locally
 
     bundle install
-    rackup
+    bundle exec rackup
 
 Application available at http://localhost:9292
