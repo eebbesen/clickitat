@@ -8,6 +8,7 @@ require 'mote/render'
 LINK_REGEX = /https?:\/\/[^\"|^<]*/
 IGNORE = ['http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd',
           'http://www.w3.org/1999/xhtml'].freeze
+CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), './config/config.local.yml'))
 
 Cuba.plugin(Mote::Render)
 
@@ -17,6 +18,11 @@ Cuba.use Rack::Static,
 
 Cuba.define do
   on get do
+    if req.env['HTTP_AUTHORIZATION'] != ENV['clickitat_api']
+      res.write '<h1>Invalid API key</h1>'
+      return
+    end
+
     on root do
       res.write view('home', title: 'Cuba Genie')
     end
@@ -31,7 +37,7 @@ Cuba.define do
         agent.user_agent_alias = 'Mechanize'
       end
 
-      gmail = Gmail.connect(username, req.params['password'])
+      gmail = Gmail.connect(username, CONFIG[username])
       message = gmail.mailbox('All').find(subject: subject).first
 
       if message
