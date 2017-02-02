@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'cuba'
 require 'gmail'
 require 'mechanize'
@@ -6,18 +7,18 @@ require 'mote/render'
 
 LINK_REGEX = /https?:\/\/[^\"|^<]*/
 IGNORE = ['http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd',
-          'http://www.w3.org/1999/xhtml']
+          'http://www.w3.org/1999/xhtml'].freeze
 
 Cuba.plugin(Mote::Render)
 
 Cuba.use Rack::Static,
-  root: 'public',
-  urls: ['/css','/js', '/fonts']
+         root: 'public',
+         urls: ['/css', '/js', '/fonts']
 
 Cuba.define do
   on get do
     on root do
-      res.write view('home', {title: 'Cuba Genie'})
+      res.write view('home', title: 'Cuba Genie')
     end
 
     on 'openclick' do
@@ -26,9 +27,9 @@ Cuba.define do
 
       res.write "<h1>Opening links for email #{subject} at #{username}</h1>"
 
-      a = Mechanize.new { |agent|
+      a = Mechanize.new do |agent|
         agent.user_agent_alias = 'Mechanize'
-      }
+      end
 
       gmail = Gmail.connect(username, req.params['password'])
       message = gmail.mailbox('All').find(subject: subject).first
@@ -44,9 +45,8 @@ Cuba.define do
           end
         end
       else
-        res.write "<h1>No messages found</h1>"
+        res.write '<h1>No messages found</h1>'
       end
     end
   end
 end
-  

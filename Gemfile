@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 source 'https://rubygems.org'
 gem 'cuba'
 gem 'gmail'
@@ -7,13 +8,12 @@ gem 'mote'
 gem 'mote-render'
 
 group :development, :test do
-  gem 'pry-byebug'
   gem 'minitest-reporters'
-  
-gem 'rack-test'
-gem 'minitest-capybara'
-gem 'selenium-webdriver'
-  
+  gem 'pry-byebug'
+
+  gem 'minitest-capybara'
+  gem 'rack-test'
+  gem 'selenium-webdriver'
+
   gem 'shotgun'
 end
-  
