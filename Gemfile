@@ -1,8 +1,10 @@
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 gem 'cuba'
-gem "mote"
-gem "mote-render"
+gem 'gmail'
+gem 'mechanize'
+gem 'mote'
+gem 'mote-render'
 
 group :development, :test do
   gem 'pry-byebug'

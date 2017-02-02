@@ -9,5 +9,11 @@ class RackTest
     assert last_response.body.match(/Hello from Cuba Genie/)
   end
 
+  def text_clickopen
+    get '/clickopen'
+    assert last_response.ok?
+    assert last_response.body.match(/OpeningClicking/)
+  end
+
 end
   
