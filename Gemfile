@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 gem 'cuba'
 gem 'gmail'
+gem 'mechanize'
 gem 'mote'
 gem 'mote-render'
 
