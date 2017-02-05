@@ -44,10 +44,14 @@ Cuba.define do
         body = message.body.parts[1].body.to_s
         body.scan(LINK_REGEX).each do |link|
           if IGNORE.include? link
-            res.write "<p>ignoring #{link}</p>"
+            res.write "<p><font color='gray'>ignoring #{link}</font></p>"
           else
             res.write "<p>clicking #{link}</p>"
-            a.get(link)
+            begin
+              a.get(link)
+            rescue => ex
+              res.write "<b><p><font color='red'>#{ex.message} when attempting to access #{link}</font></p></b>"
+            end
           end
         end
       else
