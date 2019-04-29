@@ -4,12 +4,11 @@ require 'gmail'
 require 'mechanize'
 require 'mote'
 require 'mote/render'
+require 'byebug'
 
 LINK_REGEX = /https?:\/\/[^\"|^<]*/
 IGNORE = ['http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd',
           'http://www.w3.org/1999/xhtml'].freeze
-CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), './config/config.local.yml'))
-
 Cuba.plugin(Mote::Render)
 
 Cuba.use Rack::Static,
@@ -17,6 +16,12 @@ Cuba.use Rack::Static,
          urls: ['/css', '/js', '/fonts']
 
 Cuba.define do
+  local_config_filename = File.join(File.dirname(__FILE__), './config/config.local.yml')
+  cf = YAML.load_file(local_config_filename) if File.exist?(local_config_filename)
+  byebug
+  e = ENV.merge(cf)
+  byebug
+
   on get do
     if req.env['HTTP_AUTHORIZATION'] != ENV['clickitat_api']
       res.write '<h1>Invalid API key</h1>'
@@ -37,7 +42,7 @@ Cuba.define do
         agent.user_agent_alias = 'Mechanize'
       end
 
-      gmail = Gmail.connect(username, CONFIG[username])
+      gmail = Gmail.connect(username, ENV[username])
       message = gmail.mailbox('All').find(subject: subject).first
 
       if message
