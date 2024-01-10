@@ -1,5 +1,5 @@
-
 # frozen_string_literal: true
+
 ENV['RACK_ENV'] = 'test'
 require 'minitest/autorun'
 require 'rack/test'
@@ -9,7 +9,7 @@ require 'minitest/capybara'
 
 require_relative '../clickitat'
 
-class RackTest < MiniTest::Test
+class RackTest < Minitest::Test
   include Rack::Test::Methods
 
   def app

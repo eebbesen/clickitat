@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 require 'cuba'
 require 'gmail'
 require 'mechanize'
 require 'mote'
 require 'mote/render'
 
-LINK_REGEX = /https?:\/\/[^\"|^<]*/
+LINK_REGEX = %r{https?://[^\"|^<]*}.freeze
 IGNORE = ['http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd',
           'http://www.w3.org/1999/xhtml'].freeze
 CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), './config/config.local.yml'))
@@ -49,8 +50,8 @@ Cuba.define do
             res.write "<p>clicking #{link}</p>"
             begin
               a.get(link)
-            rescue => ex
-              res.write "<b><p><font color='red'>#{ex.message} when attempting to access #{link}</font></p></b>"
+            rescue StandardError => e
+              res.write "<b><p><font color='red'>#{e.message} when attempting to access #{link}</font></p></b>"
             end
           end
         end
