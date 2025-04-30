@@ -35,6 +35,8 @@ Application available at http://localhost:9292
 
     curl -vvv -H "Authorization: <your_api_key>" 'http://localhost:9292/openclick?username=<gmail_local-part>&subject=<email_subject>'
 
+## tests
+    rake test
 
 ### About
 Built with [cuba_genie](http://www.rubydoc.info/gems/cuba_genie)
